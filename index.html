@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Hangman</title>
+
+    <link rel="stylesheet" type="text/css" href="assets/css/reset.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Limelight" rel="stylesheet">
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>
+                College Football Hangman
+            </h1>
+        </header>
+        <section>
+            <div class="scoreboard">
+                <p>Wins: <span id="win-Score"></span></p>
+                <p>Losses: <span id="loss-Score"></span></p>
+                <p>Number of Guesses Remaining: <span id="guesses-Left"></span></p>
+                <p>Guesses Made: <span id="guesses-Made"></span></p>
+            </div>
+            <div class="guesses">
+                <img src="assets/images/football.jpg">
+                <p id="underscore">_ _ _ _ _</p>
+            </div>
+        </section>
+    </div>
+    
+
+
+    <script type="text/javascript" src="assets/javascript/game.js"></script>
+</body>
+</html>

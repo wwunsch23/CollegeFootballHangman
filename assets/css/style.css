@@ -1,0 +1,19 @@
+* {
+    box-sizing: border-box;
+    color: rgb(248, 248, 121);
+}
+
+html {
+    background: url("../images/american-football-field-background-vector-5012274.jpg") no-repeat center fixed; 
+    background-size: cover;
+}
+
+body {
+    font-family: 'Limelight', cursive;
+}
+
+h1 {
+    font-size: 50px;
+    text-align: center;
+    margin-top:30px;
+}
