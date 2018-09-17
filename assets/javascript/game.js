@@ -36,8 +36,7 @@ var song = document.getElementById("myAudio");
 
 winScore.textContent = wins;
 lossScore.textContent = losses;
-
-underscore.innerHTML = "Press any key to start"
+underscore.innerHTML = "Press any key to get started!"
 
 function startGame () {
     underscoreWord = [];
@@ -72,7 +71,6 @@ function createUnderscore () {
         }
     }
     underscore.innerHTML = underscoreWord.join(" ");
-    //return underscoreWord;
 }
 
 //function to decrease guesses and add guess to guesses array
@@ -98,7 +96,7 @@ function pauseAudio(){
     console.log("Audio Stop Successfully");
     startGame ()
     chooseTeam();
-    underscore.innerHTML = "Press any key to start"
+    underscore.innerHTML = "Press any key to get started!"
 }
 
 //Capture key press event
@@ -142,7 +140,7 @@ document.onkeyup = function(event) {
         lossScore.textContent = losses;
         startGame ()
         chooseTeam();
-        underscore.innerHTML = "Press any key to start"
+        underscore.innerHTML = "Press any key to get started!"
     }
 
 }

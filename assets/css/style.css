@@ -21,3 +21,33 @@ h1 {
 #image {
     width: 200px;
 }
+
+p {
+    font-size: 30px;
+    margin-top: 10px;
+}
+
+#underscore {
+    margin-bottom: 10px;
+}
+
+section {
+    border: 3px outset rgb(248, 248, 121);
+    margin: 50px auto;
+    width: 80%;
+    overflow: hidden;
+}
+
+.scoreboard {
+    float: left;
+    width: 50%;
+    margin: 10px;
+    _border: 1px solid white;
+}
+
+.guesses {
+    float: right;
+    width: 46%;
+    margin: 10px;
+    _border: 1px solid white;
+}
