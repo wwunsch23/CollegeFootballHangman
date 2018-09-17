@@ -1,20 +1,20 @@
 //Create array of objects holding teams
 var teams = [
     {name:"Northwestern",
-     image: "../images/NorthwesternHelmet.jpg",
-     fightSong: "../music/Northwestern__Go_U_Northwestern__new.mp3"},
+     image: "assets/images/NorthwesternHelmet.jpg",
+     fightSong: "assets/music/Northwestern__Go_U_Northwestern__new.mp3"},
     {name:"Michigan",
-    image: "../images/MichiganHelmet.png",
-    fightSong: "../music/Michigan__The_Victors.mp3"},
+    image: "assets/images/MichiganHelmet.png",
+    fightSong: "assets/music/Michigan__The_Victors.mp3"},
     {name:"Iowa State",
-    image: "../images/IowaStateHelmet.png",
-    fightSong: "../music/Iowa_State__ISU_Fights__new.mp3"},
+    image: "assets/images/IowaStateHelmet.png",
+    fightSong: "assets/music/Iowa_State__ISU_Fights__new.mp3"},
     {name:"Notre Dame",
-    image: "../images/NotreDameHelmet.png",
-    fightSong: "../music/Notre_Dame__Notre_Dame_Victory_March__new.mp3"},
+    image: "assets/images/NotreDameHelmet.png",
+    fightSong: "assets/music/Notre_Dame__Notre_Dame_Victory_March__new.mp3"},
     {name:"Louisiana State",
-    image: "../images/LSUHelmet.png",
-    fightSong: "../music/LSU__Fight_For_LSU__new.mp3"}
+    image: "assets/images/LSUHelmet.png",
+    fightSong: "assets/music/LSU__Fight_For_LSU__new.mp3"}
 ];
 
 //Initialize variables
@@ -22,22 +22,28 @@ var underscoreWord = [];
 var allGuesses = [];
 var wins = 0;
 var losses = 0;
-var guessesRemain = 15;
+var guessesRemain = 10
+var teamChoice;
 
 //Create variables for html elements
 var winScore = document.getElementById("win-Score");
 var lossScore = document.getElementById("loss-Score");
 var guessesLeft = document.getElementById("guesses-Left");
 var guessesMade = document.getElementById("guesses-Made");
+var underscore = document.getElementById("underscore");
+var image = document.getElementById("image");
+var song = document.getElementById("myAudio"); 
+
+winScore.textContent = wins;
+lossScore.textContent = losses;
+
+underscore.innerHTML = "Press any key to start"
 
 function startGame () {
     underscoreWord = [];
     allGuesses = [];
-    wins = 0;
-    losses = 0;
-    guessesRemain = 15;
-    winScore.textContent = wins;
-    lossScore.textContent = losses;
+    guessesRemain = 12;
+    image.src = "assets/images/football.jpg";
     guessesLeft.textContent = guessesRemain;
     guessesMade.textContent = allGuesses;
 };
@@ -46,10 +52,15 @@ function startGame () {
 startGame ();
 
 //Have computer choose random team
-var teamChoice = teams[Math.floor(Math.random() * teams.length)];
-console.log("Team name: " + teamChoice.name);
-console.log("Team image src: " + teamChoice.image);
-console.log("Team fight song: " + teamChoice.fightSong);
+function chooseTeam (){
+    teamChoice = teams[Math.floor(Math.random() * teams.length)];
+    console.log("Team name: " + teamChoice.name);
+    console.log("Team image src: " + teamChoice.image);
+    console.log("Team fight song: " + teamChoice.fightSong);
+}
+
+//Call the choose team function to select the first team
+chooseTeam();
 
 //Generate underscore for display
 function createUnderscore () {
@@ -60,14 +71,9 @@ function createUnderscore () {
         underscoreWord.push("_");
         }
     }
-    return underscoreWord;
+    underscore.innerHTML = underscoreWord.join(" ");
+    //return underscoreWord;
 }
-
-console.log(createUnderscore());
-
-//Display underscores to the screen
-var underscore = document.getElementById("underscore");
-underscore.innerHTML = underscoreWord.join(" ");
 
 //function to decrease guesses and add guess to guesses array
 function guesses(userGuess) {
@@ -82,8 +88,25 @@ function guesses(userGuess) {
     }
 }
 
+function playAudio () {
+    song.src = teamChoice.fightSong;
+    song.play();
+}
+
+function pauseAudio(){
+    song.pause();
+    console.log("Audio Stop Successfully");
+    startGame ()
+    chooseTeam();
+    underscore.innerHTML = "Press any key to start"
+}
+
 //Capture key press event
 document.onkeyup = function(event) {
+
+    if (guessesRemain === 12) {
+        createUnderscore();
+    }
 
     let userGuess = event.key;
     console.log(userGuess);
@@ -103,9 +126,27 @@ document.onkeyup = function(event) {
         //Call guesses function to decrease guesses and push guess to array
         guesses(userGuess);
 
-    } else if (allGuesses.indexOf(userGuess) === -1 && guessesRemain > 0) {
+    } else if (!teamChoice.name.toLowerCase().includes(userGuess) && allGuesses.indexOf(userGuess) === -1 && guessesRemain > 0)
+        //Call guesses function to decrease guesses and push guess to array
         guesses(userGuess);
+
+    if (underscoreWord.indexOf("_") === -1){
+        wins++;
+        winScore.textContent = wins;
+        image.src=teamChoice.image;
+        playAudio();
+        setTimeout(pauseAudio,30000);
+
+    } else if (guessesRemain === 0 && underscoreWord.indexOf("_") > -1) {
+        losses++;
+        lossScore.textContent = losses;
+        startGame ()
+        chooseTeam();
+        underscore.innerHTML = "Press any key to start"
     }
+
 }
+
+
 
 
