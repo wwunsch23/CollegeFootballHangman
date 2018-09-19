@@ -22,7 +22,7 @@ var underscoreWord = [];
 var allGuesses = [];
 var wins = 0;
 var losses = 0;
-var guessesRemain = 10
+var guessesRemain = 12
 var teamChoice;
 
 //Create variables for html elements
@@ -36,7 +36,6 @@ var song = document.getElementById("myAudio");
 
 winScore.textContent = wins;
 lossScore.textContent = losses;
-underscore.innerHTML = "Press any key to get started!"
 
 function startGame () {
     underscoreWord = [];
@@ -45,21 +44,19 @@ function startGame () {
     image.src = "assets/images/football.jpg";
     guessesLeft.textContent = guessesRemain;
     guessesMade.textContent = allGuesses;
-};
+    underscore.innerHTML = "Press any key to get started!"
+}
 
 //Call the start game function
 startGame ();
 
 //Have computer choose random team
-function chooseTeam (){
-    teamChoice = teams[Math.floor(Math.random() * teams.length)];
-    console.log("Team name: " + teamChoice.name);
-    console.log("Team image src: " + teamChoice.image);
-    console.log("Team fight song: " + teamChoice.fightSong);
+function chooseTeam (teamArr){
+    return teamChoice = teamArr[Math.floor(Math.random() * teamArr.length)];
 }
 
-//Call the choose team function to select the first team
-chooseTeam();
+//Call the choose team function to randomly select a team
+chooseTeam(teams);
 
 //Generate underscore for display
 function createUnderscore () {
@@ -75,7 +72,7 @@ function createUnderscore () {
 
 //function to decrease guesses and add guess to guesses array
 function guesses(userGuess) {
-    if (allGuesses.indexOf(userGuess.toUpperCase()) === -1){
+    if (allGuesses.indexOf(userGuess.toUpperCase()) === -1 && song.paused === true){
         //decrease number of guesses remaining
         guessesRemain--;
         guessesLeft.textContent = guessesRemain;
@@ -93,10 +90,8 @@ function playAudio () {
 
 function pauseAudio(){
     song.pause();
-    console.log("Audio Stop Successfully");
-    startGame ()
-    chooseTeam();
-    underscore.innerHTML = "Press any key to get started!"
+    chooseTeam(teams);
+    startGame ();
 }
 
 //Capture key press event
@@ -124,11 +119,14 @@ document.onkeyup = function(event) {
         //Call guesses function to decrease guesses and push guess to array
         guesses(userGuess);
 
-    } else if (!teamChoice.name.toLowerCase().includes(userGuess) && allGuesses.indexOf(userGuess) === -1 && guessesRemain > 0)
+    } else if (!teamChoice.name.toLowerCase().includes(userGuess) && allGuesses.indexOf(userGuess) === -1 && guessesRemain > 0) {
         //Call guesses function to decrease guesses and push guess to array
         guesses(userGuess);
+    }
+    
+    console.log(song.paused);
 
-    if (underscoreWord.indexOf("_") === -1){
+    if (underscoreWord.indexOf("_") === -1 && song.paused === true){
         wins++;
         winScore.textContent = wins;
         image.src=teamChoice.image;
@@ -139,10 +137,8 @@ document.onkeyup = function(event) {
         losses++;
         lossScore.textContent = losses;
         startGame ()
-        chooseTeam();
-        underscore.innerHTML = "Press any key to get started!"
+        chooseTeam(teams);
     }
-
 }
 
 
