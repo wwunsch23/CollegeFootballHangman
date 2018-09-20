@@ -34,10 +34,11 @@ var underscore = document.getElementById("underscore");
 var image = document.getElementById("image");
 var song = document.getElementById("myAudio"); 
 
-winScore.textContent = wins;
-lossScore.textContent = losses;
-
 function startGame () {
+    if (wins === 0 && losses === 0) {
+        winScore.textContent = wins;
+        lossScore.textContent = losses;
+    }
     underscoreWord = [];
     allGuesses = [];
     guessesRemain = 12;
@@ -64,7 +65,7 @@ function createUnderscore () {
         if (teamChoice.name[i] === " ") {
             underscoreWord.push("&nbsp;");
         } else {
-        underscoreWord.push("_");
+            underscoreWord.push("_");
         }
     }
     underscore.innerHTML = underscoreWord.join(" ");
@@ -123,8 +124,6 @@ document.onkeyup = function(event) {
         //Call guesses function to decrease guesses and push guess to array
         guesses(userGuess);
     }
-    
-    console.log(song.paused);
 
     if (underscoreWord.indexOf("_") === -1 && song.paused === true){
         wins++;
